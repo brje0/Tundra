@@ -25,8 +25,7 @@ static Hook VehicleDamageHook(
                 if (man->getVehicle()->getIndex() == vehicleID)
                 {
                     man->setVehicle(nullptr);
-                    Vector addVel(veh->getRigidBody()->vel.x*LAUNCH_MULT, UP_VEL, veh->getRigidBody()->vel.z*LAUNCH_MULT);
-                    man->setVelocity(addVel);
+                    man->setVelocity(Vector{veh->getRigidBody()->vel.x*LAUNCH_MULT, UP_VEL, veh->getRigidBody()->vel.z*LAUNCH_MULT});
                 }
             }
             for (int i = 0; i < 8; i++)
