@@ -59,7 +59,7 @@ float Vector::lengthSquare() { return pow(x, 2) + pow(y, 2) + pow(z, 2); }
 void Vector::normalize()
 {
     float len = length();
-    if (len == 0) return 0;
+    if (len == 0) return;
     float invLen = 1 / len;
     x *= invLen;
     y *= invLen;
@@ -69,7 +69,7 @@ void Vector::normalize()
 Vector Vector::getNormalized()
 {
     float len = length();
-    if (len == 0) return 0;
+    if (len == 0) return Vector{};
     float invLen = 1 / len;
     return Vector{x * invLen, y * invLen, z * invLen};
 }
