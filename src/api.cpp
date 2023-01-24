@@ -58,7 +58,9 @@ float Vector::lengthSquare() { return pow(x, 2) + pow(y, 2) + pow(z, 2); }
 
 void Vector::normalize()
 {
-    float invLen = 1 / length();
+    float len = length();
+    if (len == 0) return 0;
+    float invLen = 1 / len;
     x *= invLen;
     y *= invLen;
     z *= invLen;
@@ -66,7 +68,9 @@ void Vector::normalize()
 
 Vector Vector::getNormalized()
 {
-    float invLen = 1 / length();
+    float len = length();
+    if (len == 0) return 0;
+    float invLen = 1 / len;
     return Vector{x * invLen, y * invLen, z * invLen};
 }
 
@@ -91,8 +95,8 @@ RotMatrix::RotMatrix()
 }
 
 RotMatrix::RotMatrix(float x1_in, float y1_in, float z1_in,
-	                 float x2_in, float y2_in, float z2_in,
-	                 float x3_in, float y3_in, float z3_in)
+	             float x2_in, float y2_in, float z2_in,
+	             float x3_in, float y3_in, float z3_in)
 {
     x1 = x1_in; y1 = y1_in; z1 = z1_in;
     x2 = x2_in; y2 = y2_in; z2 = z2_in;
@@ -121,7 +125,7 @@ Vector RotMatrix::getForward() { return -Vector{x3, y3, z3}; }
 
 int Player::getIndex()
 {
-	return ((uintptr_t)this - (uintptr_t)Engine::players) / sizeof(*this);
+    return ((uintptr_t)this - (uintptr_t)Engine::players) / sizeof(*this);
 }
 
 void Player::remove()
