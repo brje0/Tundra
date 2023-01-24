@@ -3,9 +3,9 @@ Tundra is a C++ Sub Rosa server modding API for Linux. Thanks to RosaServer (htt
 
 # Downloading Tundra And Required Packages
 1. To download the required packages for Tundra, execute these commands:
-`sudo apt install build-essential` (if you're on Debian/Ubuntu)
-`sudo apt install cmake`
-`sudo apt install libssl-dev`
+`sudo apt install build-essential` (if you're on Debian/Ubuntu)  
+`sudo apt install cmake`  
+`sudo apt install libssl-dev`  
 2. To download the Tundra source code, execute `git clone --recurse-submodules https://github.com/AOL99/Tundra`.
 3. To build Tundra, execute `cmake .`, then `make`. This will produce `tundra.so`.
 
