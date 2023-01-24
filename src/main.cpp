@@ -8,8 +8,6 @@
 
 // Return type should be char* so that pointer arithmetic can be done without errors.
 // Credit to RosaLink for this.
-// Return type should be char* so that pointer arithmetic can be done without errors.
-// Credit to RosaLink for this.
 char* GetBaseAddress()
 {
     std::ifstream file("/proc/self/maps");
