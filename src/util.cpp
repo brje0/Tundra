@@ -112,12 +112,15 @@ std::string getCleanTime(int minutes)
     if (days != 0)
     {
         ret = std::to_string(days) + " days";
-        if (hours != 0)
+        if (hours != 0 && minutes != 0)
         {
             ret += ", " + std::to_string(hours) + " hours";
-            if (minutes != 0)
-                ret += ", and " + std::to_string(minutes) + " minutes";
+            ret += ", and " + std::to_string(minutes) + " minutes";
         }
+        else if (hours != 0)
+            ret += " and " + std::to_string(hours) + " hours";
+        else if (minutes != 0)
+            ret += " and " + std::to_string(minutes) + " minutes";
     }
     else if (hours != 0)
     {
