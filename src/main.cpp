@@ -19,7 +19,6 @@ char* GetBaseAddress()
     return (char*)std::stoul(truncated, nullptr, 16);
 }
 
-
 static void Attach()
 {
     printf("Tundra attach thread running\n");
