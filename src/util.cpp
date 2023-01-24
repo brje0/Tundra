@@ -73,8 +73,8 @@ std::string addressFromInteger(unsigned int address)
 double getEpochTime()
 {
     auto now = std::chrono::steady_clock::now();
-	auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(now.time_since_epoch()).count();
-	return microseconds / 1'000'000.;
+    auto microseconds = std::chrono::duration_cast<std::chrono::microseconds>(now.time_since_epoch()).count();
+    return microseconds / 1'000'000.;
 }
 
 std::string getDate()
