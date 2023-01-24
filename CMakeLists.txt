@@ -9,10 +9,6 @@ add_compile_definitions(
 	SUBHOOK_IMPLEMENTATION
 )
 
-# Allow threading
-#set (THREADS_PREFER_PTHREAD_FLAG ON)
-#find_package (Threads REQUIRED)
-
 find_package (OpenSSL REQUIRED)
 
 add_library(tundra SHARED
