@@ -74,7 +74,7 @@ this file is #included; this will make the linker scream at you.
 // Clears a specified character from a string.
 // @param toClear The string to clear.
 // @param char chr The character to clear from the string.
-// @param std::string The new string.
+// @return std::string The new string.
 std::string clearChar(std::string toClear, char chr);
 
 // Returns a formatted string, similar to what printf would print.
