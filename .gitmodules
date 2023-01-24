@@ -1,0 +1,9 @@
+[submodule "lib/subhook"]
+	path = lib/subhook
+	url = https://github.com/Zeex/subhook
+[submodule "lib/json"]
+	path = lib/json
+	url = https://github.com/nlohmann/json
+[submodule "lib/cpp-httplib"]
+	path = lib/cpp-httplib
+	url = https://github.com/yhirose/cpp-httplib
