@@ -654,8 +654,7 @@ Vector vecRandBetween(Vector cornerA, Vector cornerB)
     float y = randomFloat(cornerA.y, cornerB.y);
     float z = randomFloat(cornerA.z, cornerB.z);
 
-    Vector ret(x, y, z);
-    return ret;
+    return Vector{x, y, z};
 }
 
 std::string dashPhoneNumber(int phoneNumber)
