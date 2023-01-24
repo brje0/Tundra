@@ -78,8 +78,8 @@ struct RotMatrix {
   Vector getForward();
 
   float x1, y1, z1;
-	float x2, y2, z2;
-	float x3, y3, z3;
+  float x2, y2, z2;
+  float x3, y3, z3;
 };
 
 struct Vector {
@@ -775,18 +775,18 @@ struct StreetLane {
 };
 
 struct Street {
-	char name[32];
-	int unk0;               // 20
-	int intersectionA;      // 24
-	int intersectionB;      // 28
-	int unk1[3];            // 2c
-	int numLanes;           // 38
-	StreetLane lanes[16];   // 3c
-	float unk2[6];          // 1fc
-	Vector trafficCuboidA;  // 214
-	Vector trafficCuboidB;  // 220
-	int numTraffic;         // 22c
-	char unk3[0x630 - 0x22c - 4];
+  char name[32];
+  int unk0;               // 20
+  int intersectionA;      // 24
+  int intersectionB;      // 28
+  int unk1[3];            // 2c
+  int numLanes;           // 38
+  StreetLane lanes[16];   // 3c
+  float unk2[6];          // 1fc
+  Vector trafficCuboidA;  // 214
+  Vector trafficCuboidB;  // 220
+  int numTraffic;         // 22c
+  char unk3[0x630 - 0x22c - 4];
 
   int getIndex();
   StreetIntersection* getIntersectionA();
@@ -846,41 +846,41 @@ struct TrafficCar {
 };
 
 struct Vehicle {
-	int isActive;
-	unsigned int type;      // 04
-	int controllableState;  // 08
-	// default 100
-	int health;              // 0c
-	int unk1;                // 10
-	int lastDriverPlayerID;  // 14
-	unsigned int color;      // 18
-	//-1 = won't despawn
-	short despawnTime;   // 1c
-	short spawnedState;  // 1e
-	int isLocked;        // 20
-	int unk3;            // 24
-	int bodyID;          // 28
-	Vector pos;          // 2c
-	Vector pos2;         // 38
-	RotMatrix rot;       // 44
-	int unk4;            // 68
-	Vector vel;          // 6c
-	char unk5[0x27fc - 0x6c - 12];
-	int windowStates[8];  // 27fc
-	char unk6[0x3600 - 0x27fc - (4 * 8)];
-	float gearX;         // 3600
-	float steerControl;  // 3604
-	float gearY;         // 3608
-	float gasControl;    // 360c
-	char unk7[0x3648 - 0x360c - 4];
-	int trafficCarID;  // 3648
-	char unk8[0x3930 - 0x3648 - 4];
-	int engineRPM;  // 3930
-	char unk9[0x4fa8 - 0x3930 - 4];
-	int bladeBodyID;  // 4fa8
-	char unk10[0x50dc - 0x4fa8 - 4];
-	int numSeats;  // 50dc
-	char unk11[0x5168 - 0x50dc - 4];
+  int isActive;
+  unsigned int type;      // 04
+  int controllableState;  // 08
+  // default 100
+  int health;              // 0c
+  int unk1;                // 10
+  int lastDriverPlayerID;  // 14
+  unsigned int color;      // 18
+  // -1 = won't despawn
+  short despawnTime;   // 1c
+  short spawnedState;  // 1e
+  int isLocked;        // 20
+  int unk3;            // 24
+  int bodyID;          // 28
+  Vector pos;          // 2c
+  Vector pos2;         // 38
+  RotMatrix rot;       // 44
+  int unk4;            // 68
+  Vector vel;          // 6c
+  char unk5[0x27fc - 0x6c - 12];
+  int windowStates[8];  // 27fc
+  char unk6[0x3600 - 0x27fc - (4 * 8)];
+  float gearX;         // 3600
+  float steerControl;  // 3604
+  float gearY;         // 3608
+  float gasControl;    // 360c
+  char unk7[0x3648 - 0x360c - 4];
+  int trafficCarID;  // 3648
+  char unk8[0x3930 - 0x3648 - 4];
+  int engineRPM;  // 3930
+  char unk9[0x4fa8 - 0x3930 - 4];
+  int bladeBodyID;  // 4fa8
+  char unk10[0x50dc - 0x4fa8 - 4];
+  int numSeats;  // 50dc
+  char unk11[0x5168 - 0x50dc - 4];
 
   int getIndex();
 
