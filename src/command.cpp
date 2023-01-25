@@ -8,7 +8,7 @@ std::vector<std::string> commands;
 
 std::function<canCallFunc> defaultCanCall = [](Player* player){ return true; };
 
-std::vector<std::string> processInput(const std::string& input)
+static std::vector<std::string> processInput(const std::string& input)
 {
     std::vector<std::string> args;
     std::string curArg = "";
@@ -30,7 +30,7 @@ std::vector<std::string> processInput(const std::string& input)
     return args;
 }
 
-Hook command_PlayerMessage(
+static Hook PlayerMessageHook(
     &PlayerMessage,
     [](int &playerID, char* &message){
         // Convert char* to std::string
