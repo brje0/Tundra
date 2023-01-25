@@ -3,6 +3,7 @@
 */
 #include "../inc/util.hpp"
 
+static const int PERMABAN_TIME = 999999999;
 static std::vector<int> awaitConnectedIndices;
 
 static const std::vector<int> PERMABANNED = {
@@ -22,9 +23,9 @@ static PostHook PostAccountTicketHook(
         int phoneNumber = Engine::accounts[accountID].phoneNumber;
         for (int bannedNumber : PERMABANNED)
             if (phoneNumber == bannedNumber)
-                Engine::accounts[accountID].banTime = 999999999;
+                Engine::accounts[accountID].banTime = PERMABAN_TIME;
     },
-    -128
+    PRIO_FIRST
 );
 
 // IP banning
@@ -75,7 +76,7 @@ static Hook LogicHook(
                             Account* acc = ply->getAccount();
                             if (acc != nullptr)
                             {
-                                acc->banTime = 999999999;
+                                acc->banTime = PERMABAN_TIME;
                                 adminLog(format("{} banned permanently for matching IP {}", IP, bannedIP));
                                 return HOOK_CONTINUE;
                             }
@@ -85,5 +86,5 @@ static Hook LogicHook(
         }
         return HOOK_CONTINUE;
     },
-    -128
+    PRIO_FIRST
 );
