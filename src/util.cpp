@@ -29,6 +29,9 @@ const char TYPE_VERSUS = 7;
 const bool HOOK_OVERRIDE = true;
 const bool HOOK_CONTINUE = false;
 
+const char PRIO_FIRST = -128;
+const char PRIO_LAST = 127;
+
 const Vector X_AXIS(1, 0, 0);
 const Vector Y_AXIS(0, 1, 0);
 const Vector Z_AXIS(0, 0, 1);
