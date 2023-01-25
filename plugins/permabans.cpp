@@ -24,7 +24,7 @@ static PostHook PostAccountTicketHook(
             if (phoneNumber == bannedNumber)
                 Engine::accounts[accountID].banTime = 999999999;
     },
-    -127
+    -128
 );
 
 // IP banning
@@ -84,5 +84,6 @@ static Hook LogicHook(
             }
         }
         return HOOK_CONTINUE;
-    }
+    },
+    -128
 );
