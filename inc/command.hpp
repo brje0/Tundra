@@ -17,7 +17,6 @@ extern std::vector<std::function<commandFunc>> commandFunctions;
 extern std::vector<std::string> commands;
 
 extern std::function<canCallFunc> defaultCanCall;
-bool callAllCommands(int &playerID, char* &message);
 
 class Command
 {
