@@ -636,7 +636,7 @@ int randomInt(int lower, int upper)
 
 float randomFloat(float lower, float upper)
 {
-    return lower + (float)rand() * (upper - lower) / (float)RAND_MAX;
+    return lower + rand() * (upper - lower) / RAND_MAX;
 }
 
 bool isVectorInCuboid(Vector pos, Vector cornerA, Vector cornerB)
