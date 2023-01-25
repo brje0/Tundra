@@ -19,7 +19,7 @@ static std::string discordPostUsername;
 
 static void log(std::string message)
 {
-    std::cout << message << std::endl;
+    std::cout << message << '\n';
     logToFileTime("dailyLogs/" + getDate() + ".txt", message);
     if (webhookEnabled)
         cachedLines.push_back(message);
@@ -27,6 +27,7 @@ static void log(std::string message)
 
 static void handleResult(httplib::Result& res)
 {
+    // status 200 is OK. status 204 is no content
     if (res->status != 200 && res->status != 204)
         std::cout << format("DISCORD LOGGING ERROR. CODE: {}", res->status) << '\n';
 }
