@@ -200,8 +200,6 @@ public:
     std::vector<std::function<ChildPostHookSignature>> postCallbacks;
     std::vector<int> parallelInfoVec;
     std::vector<int> parallelInfoVecPost;
-    std::vector<unsigned short> onceHookIndices;
-    std::vector<unsigned short> oncePostHookIndices;
 private:
     unsigned short insertByPriority(std::function<ChildHookSignature> callback, char priority)
     {
@@ -266,6 +264,8 @@ private:
     // corresponding priority.
     std::vector<char> priorities;
     std::vector<char> postPriorities;
+    std::vector<unsigned short> onceHookIndices;
+    std::vector<unsigned short> oncePostHookIndices;
     ParentHookSignature* hookFunction;
     ParentHookSignature* targetFunction;
 };
