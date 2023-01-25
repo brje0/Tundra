@@ -64,52 +64,55 @@ extern std::unordered_map<std::string, anyVar> playerData[256];
 extern std::unordered_map<std::string, anyVar> bodyData[8192];
 extern std::unordered_map<std::string, anyVar> vehicleData[512];
 
+struct Vector {
+  Vector();
+  Vector(float x_in, float y_in, float z_in);
+
+  Vector operator-() const;
+  Vector operator+(const Vector& other) const;
+  void operator+=(const Vector& other);
+  Vector operator-(const Vector& other) const;
+  void operator-=(const Vector& other);
+
+  Vector operator*(float scalar) const;
+  void operator*=(float scalar);
+  Vector operator/(float scalar) const;
+  void operator/=(float scalar);
+
+  Vector operator*(const RotMatrix& rot) const;
+  void operator*=(const RotMatrix& rot);
+
+  float length() const;
+  float lengthSquare() const;
+  void normalize();
+  Vector getNormalized() const;
+  float dist(const Vector& other) const;
+  float distSquare(const Vector& other) const;
+  float dotProduct(const Vector& other) const;
+  Vector crossProduct(const Vector& other) const;
+  bool isOrthogonal(const Vector& other) const;
+
+  float x;
+  float y;
+  float z;
+};
+
 struct RotMatrix {
   // Default constructor initializes to identity matrix.
   RotMatrix();
   RotMatrix(float x1_in, float y1_in, float z1_in,
 	          float x2_in, float y2_in, float z2_in,
 	          float x3_in, float y3_in, float z3_in);
-  RotMatrix operator*(RotMatrix other);
+  RotMatrix operator*(RotMatrix other) const;
   void operator*=(RotMatrix other);
 
-  Vector getRight();
-  Vector getUp();
-  Vector getForward();
+  Vector getRight() const;
+  Vector getUp() const;
+  Vector getForward() const;
 
   float x1, y1, z1;
   float x2, y2, z2;
   float x3, y3, z3;
-};
-
-struct Vector {
-  Vector();
-  Vector(float x_in, float y_in, float z_in);
-
-  Vector operator-();
-  Vector operator+(Vector other);
-  void operator+=(Vector other);
-  Vector operator-(Vector other);
-  void operator-=(Vector other);
-
-  Vector operator*(float scalar);
-  void operator*=(float scalar);
-  Vector operator/(float scalar);
-  void operator/=(float scalar);
-
-  Vector operator*(RotMatrix rot);
-  void operator*=(RotMatrix rot);
-
-  float length();
-  float lengthSquare();
-  void normalize();
-  Vector getNormalized();
-  float dist(Vector* other);
-  float distSquare(Vector* other);
-
-  float x;
-  float y;
-  float z;
 };
 
 struct Action {
