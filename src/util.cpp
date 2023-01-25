@@ -536,10 +536,9 @@ RotMatrix yawToRotMatrix(float yaw)
     float s = sin(yaw);
     float c = cos(yaw);
 
-    RotMatrix ret(c, 0, s,
-                  0, 1, 0,
-                 -s, 0, c);
-    return ret;
+    return RotMatrix{c, 0, s,
+                     0, 1, 0,
+                    -s, 0, c};
 }
 
 // This is technically roll.
@@ -547,11 +546,10 @@ RotMatrix pitchToRotMatrix(float pitch)
 {
     float s = sin(pitch);
     float c = cos(pitch);
-
-    RotMatrix ret(1, 0, 0,
-                  0, c,-s,
-                  0, s, c);
-    return ret;
+    
+    return RotMatrix{1, 0, 0,
+                     0, c,-s,
+                     0, s, c};
 }
 
 // This is technically yaw.
@@ -560,10 +558,9 @@ RotMatrix rollToRotMatrix(float roll)
     float s = sin(roll);
     float c = cos(roll);
 
-    RotMatrix ret(c,-s, 0,
-                  s, c, 0,
-                  0, 0, 1);
-    return ret;
+    return RotMatrix{c,-s, 0,
+                     s, c, 0,
+                     0, 0, 1};
 }
 
 RotMatrix axisAngleToRotMatrix(Vector axis, float angle)
@@ -576,10 +573,9 @@ RotMatrix axisAngleToRotMatrix(Vector axis, float angle)
     float y = axis.y;
     float z = axis.z;
 
-    RotMatrix ret(x*x*C + c, x*y*C - z*s, x*z*C + y*s,
-                  y*x*C + z*s, y*y*C + c, y*z*C - x*s,
-                  z*x*C - y*s, z*y*C + x*s, z*z*C + c);
-    return ret;
+    return RotMatrix{x*x*C + c, x*y*C - z*s, x*z*C + y*s,
+                     y*x*C + z*s, y*y*C + c, y*z*C - x*s,
+                     z*x*C - y*s, z*y*C + x*s, z*z*C + c};
 }
 
 RotMatrix pointTowards(Vector pos, Vector targetPos)
@@ -592,8 +588,7 @@ RotMatrix pointTowards(Vector pos, Vector targetPos)
     float pitch = -atan2(y, d);
     float angle = M_PI - atan2(x, z);
 
-    RotMatrix rot = pitchToRotMatrix(pitch) * axisAngleToRotMatrix(Y_AXIS, angle);
-    return rot;
+    return pitchToRotMatrix(pitch) * axisAngleToRotMatrix(Y_AXIS, angle);
 }
 
 const RotMatrix NORTH = yawToRotMatrix(0.0f);
@@ -607,8 +602,7 @@ const RotMatrix NORTHWEST = yawToRotMatrix(M_PI * 7 / 4);
 
 std::pair<float, float> getCirclePoint(float radius, float angle)
 {
-    std::pair ret(cos(angle) * radius, sin(angle) * radius);
-    return ret;
+    return std::pair{cos(angle) * radius, sin(angle) * radius};
 }
 
 std::vector<std::pair<float, float>> getCirclePoints(float radius, int numPoints)
