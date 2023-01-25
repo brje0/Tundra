@@ -218,9 +218,8 @@ private:
                 priorities.insert(priorities.begin() + i, priority);
                 callbacks.insert(callbacks.begin() + i, callback);
                 parallelInfoVec.insert(parallelInfoVec.begin() + i, NOT_SPECIAL);
-                for (int j = 0; j < onceHookIndices.size(); j++)
-                    if (onceHookIndices[j] >= i)
-                        onceHookIndices[j]++;
+                for (unsigned short &index : onceHookIndices)
+                    if (index >= i) index++;
                 return i;
             }
             i++;
@@ -247,9 +246,8 @@ private:
                 postPriorities.insert(postPriorities.begin() + i, priority);
                 postCallbacks.insert(postCallbacks.begin() + i, postCallback);
                 parallelInfoVecPost.insert(parallelInfoVecPost.begin() + i, NOT_SPECIAL);
-                for (int j = 0; j < oncePostHookIndices.size(); j++)
-                    if (oncePostHookIndices[j] >= i)
-                        oncePostHookIndices[j]++;
+                for (unsigned short &index : oncePostHookIndices)
+                    if (index >= i) index++;
                 return i;
             }
             i++;
