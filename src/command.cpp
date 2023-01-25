@@ -1,6 +1,4 @@
 #include "../inc/command.hpp"
-#include "../inc/hook.hpp"
-#include "../inc/util.hpp"
 
 const std::string ACCESS_DENIED_MESSAGE = "Error: Access denied.";
 
