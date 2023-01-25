@@ -122,13 +122,13 @@ public:
     unsigned short hookOnce(std::function<ChildHookSignature> callback)
     {
         unsigned short index = insertByPriority(callback, DEFAULT_HOOK_PRIORITY);
-        onceHookParallel[index] = true;
+        onceHookIndices.push_back(index);
         return index;
     }
     unsigned short hookOnce(std::function<ChildHookSignature> callback, char priority)
     {
         unsigned short index = insertByPriority(callback, priority);
-        onceHookParallel[index] = true;
+        onceHookIndices.push_back(index);
         return index;
     }
     unsigned short addPostHook(std::function<ChildPostHookSignature> postCallback)
@@ -142,52 +142,71 @@ public:
     unsigned short postHookOnce(std::function<ChildPostHookSignature> postCallback)
     {
         unsigned short index = insertByPriorityPost(postCallback, DEFAULT_HOOK_PRIORITY);
-        oncePostHookParallel[index] = true;
+        oncePostHookIndices.push_back(index);
         return index;
     }
     unsigned short postHookOnce(std::function<ChildPostHookSignature> postCallback, char priority)
     {
         unsigned short index = insertByPriorityPost(postCallback, priority);
-        oncePostHookParallel[index] = true;
+        oncePostHookIndices.push_back(index);
         return index;
     }
     void clearOnceHooks()
     {
-        for (int i = callbacks.size() - 1; i > -1; i--)
-            if (onceHookParallel[i])
-                removeHook(i);
+        for (unsigned short index : onceHookIndices)
+        {
+            callbacks.erase(callbacks.begin() + index);
+            priorities.erase(priorities.begin() + index);
+            parallelInfoVec.erase(parallelInfoVec.begin() + index);
+        }
+        onceHookIndices.clear();
     }
     void clearOncePostHooks()
     {
-        for (int i = postCallbacks.size() - 1; i > -1; i--)
-            if (oncePostHookParallel[i])
-                removePostHook(i);
+        for (unsigned short index : oncePostHookIndices)
+        {
+            postCallbacks.erase(postCallbacks.begin() + index);
+            postPriorities.erase(postPriorities.begin() + index);
+            parallelInfoVecPost.erase(parallelInfoVecPost.begin() + index);
+        }
+        oncePostHookIndices.clear();
     }
     void removeHook(unsigned short index)
     {
         callbacks.erase(callbacks.begin() + index);
         priorities.erase(priorities.begin() + index);
         parallelInfoVec.erase(parallelInfoVec.begin() + index);
-        onceHookParallel.erase(onceHookParallel.begin() + index);
+        for (int i = onceHookIndices.size() - 1; i > -1; i--)
+            if (onceHookIndices[i] == index)
+            {
+                onceHookIndices.erase(onceHookIndices.begin() + i);
+                break;
+            }
     }
     void removePostHook(unsigned short index)
     {
         postCallbacks.erase(postCallbacks.begin() + index);
         postPriorities.erase(postPriorities.begin() + index);
         parallelInfoVecPost.erase(parallelInfoVecPost.begin() + index);
-        oncePostHookParallel.erase(oncePostHookParallel.begin() + index);
+        for (int i = oncePostHookIndices.size() - 1; i > -1; i--)
+            if (oncePostHookIndices[i] == index)
+            {
+                oncePostHookIndices.erase(oncePostHookIndices.begin() + i);
+                break;
+            }
     }
     subhook::Hook hook;
     std::vector<std::function<ChildHookSignature>> callbacks;
     std::vector<std::function<ChildPostHookSignature>> postCallbacks;
     std::vector<int> parallelInfoVec;
     std::vector<int> parallelInfoVecPost;
+    std::vector<unsigned short> onceHookIndices;
+    std::vector<unsigned short> oncePostHookIndices;
 private:
     unsigned short insertByPriority(std::function<ChildHookSignature> callback, char priority)
     {
         if (priorities.size() == 0)
         {
-            onceHookParallel.insert(onceHookParallel.begin(), false);
             priorities.insert(priorities.begin(), priority);
             callbacks.insert(callbacks.begin(), callback);
             parallelInfoVec.insert(parallelInfoVec.begin(), NOT_SPECIAL);
@@ -198,15 +217,16 @@ private:
         {
             if (priority < prioNumber)
             {
-                onceHookParallel.insert(onceHookParallel.begin() + i, false);
                 priorities.insert(priorities.begin() + i, priority);
                 callbacks.insert(callbacks.begin() + i, callback);
                 parallelInfoVec.insert(parallelInfoVec.begin() + i, NOT_SPECIAL);
+                for (int j = 0; j < onceHookIndices.size(); j++)
+                    if (onceHookIndices[j] >= i)
+                        onceHookIndices[j]++;
                 return i;
             }
             i++;
         }
-        onceHookParallel.push_back(false);
         priorities.push_back(priority);
         callbacks.push_back(callback);
         parallelInfoVec.push_back(NOT_SPECIAL);
@@ -216,7 +236,6 @@ private:
     {
         if (postPriorities.size() == 0)
         {
-            oncePostHookParallel.insert(oncePostHookParallel.begin(), false);
             postPriorities.insert(postPriorities.begin(), priority);
             postCallbacks.insert(postCallbacks.begin(), postCallback);
             parallelInfoVecPost.insert(parallelInfoVecPost.begin(), NOT_SPECIAL);
@@ -227,15 +246,16 @@ private:
         {
             if (priority < prioNumber)
             {
-                oncePostHookParallel.insert(oncePostHookParallel.begin() + i, false);
                 postPriorities.insert(postPriorities.begin() + i, priority);
                 postCallbacks.insert(postCallbacks.begin() + i, postCallback);
                 parallelInfoVecPost.insert(parallelInfoVecPost.begin() + i, NOT_SPECIAL);
+                for (int j = 0; j < oncePostHookIndices.size(); j++)
+                    if (oncePostHookIndices[j] >= i)
+                        oncePostHookIndices[j]++;
                 return i;
             }
             i++;
         }
-        oncePostHookParallel.push_back(false);
         postPriorities.push_back(priority);
         postCallbacks.push_back(postCallback);
         parallelInfoVecPost.push_back(NOT_SPECIAL);
@@ -246,8 +266,6 @@ private:
     // corresponding priority.
     std::vector<char> priorities;
     std::vector<char> postPriorities;
-    std::vector<bool> onceHookParallel;
-    std::vector<bool> oncePostHookParallel;
     ParentHookSignature* hookFunction;
     ParentHookSignature* targetFunction;
 };
