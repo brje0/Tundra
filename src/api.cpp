@@ -442,31 +442,31 @@ int Item::cashGetBillValue()
 
 RigidBody* Item::getRigidBody() { return &Engine::bodies[bodyID]; }
 
-void Item::addOnPickUpHook(std::function<bool(int &itemID, int &childItemID, int &parentHumanID, int &slot)> funcToAdd)
+void Item::pickUpHook(std::function<bool(int &itemID, int &childItemID, int &parentHumanID, int &slot)> funcToAdd)
 {
     Hook tempHook(&LinkItem, funcToAdd);
     LinkItem.parallelInfoVec[tempHook.index] = getIndex();
 }
 
-void Item::addOnPickUpHook(std::function<bool(int &itemID, int &childItemID, int &parentHumanID, int &slot)> funcToAdd, char priority)
+void Item::pickUpHook(std::function<bool(int &itemID, int &childItemID, int &parentHumanID, int &slot)> funcToAdd, char priority)
 {
     Hook tempHook(&LinkItem, funcToAdd, priority);
     LinkItem.parallelInfoVec[tempHook.index] = getIndex();
 }
 
-void Item::addOnPickUpHookOnce(std::function<bool(int &itemID, int &childItemID, int &parentHumanID, int &slot)> funcToAdd)
+void Item::pickUpHookOnce(std::function<bool(int &itemID, int &childItemID, int &parentHumanID, int &slot)> funcToAdd)
 {
     Hook tempHook(&LinkItem, funcToAdd);
     LinkItem.parallelInfoVec[tempHook.index] = getIndex() + MAX_NUM_OF_ITEMS;
 }
 
-void Item::addOnPickUpHookOnce(std::function<bool(int &itemID, int &childItemID, int &parentHumanID, int &slot)> funcToAdd, char priority)
+void Item::pickUpHookOnce(std::function<bool(int &itemID, int &childItemID, int &parentHumanID, int &slot)> funcToAdd, char priority)
 {
     Hook tempHook(&LinkItem, funcToAdd, priority);
     LinkItem.parallelInfoVec[tempHook.index] = getIndex() + MAX_NUM_OF_ITEMS;
 }
 
-bool Item::hasOnPickUpHook()
+bool Item::hasPickUpHook()
 {
     int index = getIndex();
     for (int info : LinkItem.parallelInfoVec)
@@ -475,7 +475,7 @@ bool Item::hasOnPickUpHook()
     return false;
 }
 
-bool Item::removeOnPickUpHook()
+bool Item::removePickUpHook()
 {
     int index = getIndex();
     unsigned short i = 0;
