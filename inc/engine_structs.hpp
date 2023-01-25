@@ -617,12 +617,12 @@ struct Item {
     itemData[getIndex()][key] = value;
   }
 
-  void addOnPickUpHook(std::function<bool(int &itemID, int &childItemID, int &parentHumanID, int &slot)> funcToAdd);
-  void addOnPickUpHook(std::function<bool(int &itemID, int &childItemID, int &parentHumanID, int &slot)> funcToAdd, char priority);
-  void addOnPickUpHookOnce(std::function<bool(int &itemID, int &childItemID, int &parentHumanID, int &slot)> funcToAdd);
-  void addOnPickUpHookOnce(std::function<bool(int &itemID, int &childItemID, int &parentHumanID, int &slot)> funcToAdd, char priority);
-  bool hasOnPickUpHook();
-  bool removeOnPickUpHook();
+  void pickUpHook(std::function<bool(int &itemID, int &childItemID, int &parentHumanID, int &slot)> funcToAdd);
+  void pickUpHook(std::function<bool(int &itemID, int &childItemID, int &parentHumanID, int &slot)> funcToAdd, char priority);
+  void pickUpHookOnce(std::function<bool(int &itemID, int &childItemID, int &parentHumanID, int &slot)> funcToAdd);
+  void pickUpHookOnce(std::function<bool(int &itemID, int &childItemID, int &parentHumanID, int &slot)> funcToAdd, char priority);
+  bool hasPickUpHook();
+  bool removePickUpHook();
 };
 
 struct Options {
