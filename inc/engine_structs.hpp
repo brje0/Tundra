@@ -101,8 +101,8 @@ struct RotMatrix {
   // Default constructor initializes to identity matrix.
   RotMatrix();
   RotMatrix(float x1_in, float y1_in, float z1_in,
-	          float x2_in, float y2_in, float z2_in,
-	          float x3_in, float y3_in, float z3_in);
+	    float x2_in, float y2_in, float z2_in,
+	    float x3_in, float y3_in, float z3_in);
   RotMatrix operator*(RotMatrix other) const;
   void operator*=(RotMatrix other);
 
