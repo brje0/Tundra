@@ -29,32 +29,41 @@ Vector::Vector(float x_in, float y_in, float z_in)
     x = x_in; y = y_in; z = z_in;
 }
 
-Vector Vector::operator-() { return Vector{-x, -y, -z}; }
+Vector Vector::operator-() const { return Vector{-x, -y, -z}; }
 
-Vector Vector::operator+(Vector other) { return Vector{x + other.x, y + other.y, z + other.z}; }
+Vector Vector::operator+(const Vector& other) const { return Vector{x + other.x, y + other.y, z + other.z}; }
 
-void Vector::operator+=(Vector other) { x += other.x; y += other.y; z += other.z; }
+void Vector::operator+=(const Vector& other) { x += other.x; y += other.y; z += other.z; }
 
-Vector Vector::operator-(Vector other) { return Vector{x - other.x, y - other.y, z - other.z}; }
+Vector Vector::operator-(const Vector& other) const { return Vector{x - other.x, y - other.y, z - other.z}; }
 
-void Vector::operator-=(Vector other) { x -= other.x; y -= other.y; z -= other.z; }
+void Vector::operator-=(const Vector& other) { x -= other.x; y -= other.y; z -= other.z; }
 
-Vector Vector::operator*(float scalar) { return Vector{x * scalar, y * scalar, z * scalar}; }
+Vector Vector::operator*(float scalar) const { return Vector{x * scalar, y * scalar, z * scalar}; }
 
 void Vector::operator*=(float scalar) { x *= scalar; y *= scalar; z *= scalar; }
 
-Vector Vector::operator/(float scalar) { return Vector{x / scalar, y / scalar, z / scalar}; }
+Vector Vector::operator/(float scalar) const { return Vector{x / scalar, y / scalar, z / scalar}; }
 
 void Vector::operator/=(float scalar) { x /= scalar; y /= scalar; z /= scalar; }
 
-Vector Vector::operator*(RotMatrix rot)
+Vector Vector::operator*(const RotMatrix& rot) const
 {
-    return Vector{x * rot.x1 + y * rot.x2 + z * rot.x3, x * rot.y1 + y * rot.y2 + z * rot.y3, x * rot.z1 + y * rot.z2 + z * rot.z3};
+    return Vector{x * rot.x1 + y * rot.x2 + z * rot.x3,
+                  x * rot.y1 + y * rot.y2 + z * rot.y3,
+                  x * rot.z1 + y * rot.z2 + z * rot.z3};
 }
 
-float Vector::length() { return sqrtf(pow(x, 2) + pow(y, 2) + pow(z, 2)); }
+void Vector::operator*=(const RotMatrix& rot)
+{
+    x = x * rot.x1 + y * rot.x2 + z * rot.x3;
+    y = x * rot.y1 + y * rot.y2 + z * rot.y3;
+    z = x * rot.z1 + y * rot.z2 + z * rot.z3;
+}
 
-float Vector::lengthSquare() { return pow(x, 2) + pow(y, 2) + pow(z, 2); }
+float Vector::length() const { return sqrtf(pow(x, 2) + pow(y, 2) + pow(z, 2)); }
+
+float Vector::lengthSquare() const { return pow(x, 2) + pow(y, 2) + pow(z, 2); }
 
 void Vector::normalize()
 {
@@ -66,7 +75,7 @@ void Vector::normalize()
     z *= invLen;
 }
 
-Vector Vector::getNormalized()
+Vector Vector::getNormalized() const
 {
     float len = length();
     if (len == 0) return Vector{};
@@ -74,14 +83,31 @@ Vector Vector::getNormalized()
     return Vector{x * invLen, y * invLen, z * invLen};
 }
 
-float Vector::dist(Vector* other)
+float Vector::dist(const Vector& other) const
 {
-    return sqrtf(pow((x - other->x), 2) + pow((y - other->y), 2) + pow((z - other->z), 2));
+    return sqrtf(pow((x - other.x), 2) + pow((y - other.y), 2) + pow((z - other.z), 2));
 }
 
-float Vector::distSquare(Vector* other)
+float Vector::distSquare(const Vector& other) const
 {
-    return pow((x - other->x), 2) + pow((y - other->y), 2) + pow((z - other->z), 2);
+    return pow((x - other.x), 2) + pow((y - other.y), 2) + pow((z - other.z), 2);
+}
+
+float Vector::dotProduct(const Vector& other) const
+{
+    return x * other.x + y * other.y + z * other.z;
+}
+
+Vector Vector::crossProduct(const Vector& other) const
+{
+    return Vector{y * other.z - z * other.y,
+                  z * other.x - x * other.z,
+                  x * other.y - y * other.x};
+}
+
+bool Vector::isOrthogonal(const Vector& other) const
+{
+    return dotProduct(other) == 0;
 }
 
 // RotMatrix
@@ -95,15 +121,15 @@ RotMatrix::RotMatrix()
 }
 
 RotMatrix::RotMatrix(float x1_in, float y1_in, float z1_in,
-	             float x2_in, float y2_in, float z2_in,
-	             float x3_in, float y3_in, float z3_in)
+                     float x2_in, float y2_in, float z2_in,
+                     float x3_in, float y3_in, float z3_in)
 {
     x1 = x1_in; y1 = y1_in; z1 = z1_in;
     x2 = x2_in; y2 = y2_in; z2 = z2_in;
     x3 = x3_in; y3 = y3_in; z3 = z3_in;
 }
 
-RotMatrix RotMatrix::operator*(RotMatrix other)
+RotMatrix RotMatrix::operator*(RotMatrix other) const
 {
     return RotMatrix{x1 * other.x1 + y1 * other.x2 + z1 * other.x3, x1 * other.y1 + y1 * other.y2 + z1 * other.y3, x1 * other.z1 + y1 * other.z2 + z1 * other.z3,
                      x2 * other.x1 + y2 * other.x2 + z2 * other.x3, x2 * other.y1 + y2 * other.y2 + z2 * other.y3, x2 * other.z1 + y2 * other.z2 + z2 * other.z3,
@@ -117,9 +143,9 @@ void RotMatrix::operator*=(RotMatrix other)
     x3 = x3 * other.x1 + y3 * other.x2 + z3 * other.x3; y3 = x3 * other.y1 + y3 * other.y2 + z3 * other.y3; z3 = x3 * other.z1 + y3 * other.z2 + z3 * other.z3;
 }
 
-Vector RotMatrix::getRight()   { return  Vector{x1, y1, z1}; }
-Vector RotMatrix::getUp()      { return  Vector{x2, y2, z2}; }
-Vector RotMatrix::getForward() { return -Vector{x3, y3, z3}; }
+Vector RotMatrix::getRight() const   { return  Vector{x1, y1, z1}; }
+Vector RotMatrix::getUp() const      { return  Vector{x2, y2, z2}; }
+Vector RotMatrix::getForward() const { return -Vector{x3, y3, z3}; }
 
 // Player
 
