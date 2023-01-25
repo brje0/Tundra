@@ -4,6 +4,7 @@
 #include <variant>
 #include <stdexcept>
 #include <functional>
+#include <bits/stdc++.h>
 
 #include "../lib/subhook/subhook.h"
 #include "engine_structs.hpp"
@@ -153,21 +154,25 @@ public:
     }
     void clearOnceHooks()
     {
-        for (unsigned short index : onceHookIndices)
+        if (onceHookIndices.size() == 0) return;
+        std::sort(onceHookIndices.begin(), onceHookIndices.end());
+        for (int i = onceHookIndices.size() - 1; i > -1; i--)
         {
-            callbacks.erase(callbacks.begin() + index);
-            priorities.erase(priorities.begin() + index);
-            parallelInfoVec.erase(parallelInfoVec.begin() + index);
+            callbacks.erase(callbacks.begin() + onceHookIndices[i]);
+            priorities.erase(priorities.begin() + onceHookIndices[i]);
+            parallelInfoVec.erase(parallelInfoVec.begin() + onceHookIndices[i]);
         }
         onceHookIndices.clear();
     }
     void clearOncePostHooks()
     {
-        for (unsigned short index : oncePostHookIndices)
+        if (oncePostHookIndices.size() == 0) return;
+        std::sort(oncePostHookIndices.begin(), oncePostHookIndices.end());
+        for (int i = oncePostHookIndices.size() - 1; i > -1; i--)
         {
-            postCallbacks.erase(postCallbacks.begin() + index);
-            postPriorities.erase(postPriorities.begin() + index);
-            parallelInfoVecPost.erase(parallelInfoVecPost.begin() + index);
+            postCallbacks.erase(postCallbacks.begin() + oncePostHookIndices[i]);
+            postPriorities.erase(postPriorities.begin() + oncePostHookIndices[i]);
+            parallelInfoVecPost.erase(parallelInfoVecPost.begin() + oncePostHookIndices[i]);
         }
         oncePostHookIndices.clear();
     }

@@ -1,12 +1,13 @@
 #pragma once
 
 #include <string>
-#include <cstring>
-#include <bits/stdc++.h>
 #include <vector>
+#include <functional>
 
 #include "engine.hpp"
 #include "engine_structs.hpp"
+#include "hook.hpp"
+#include "util.hpp"
 
 typedef bool(canCallFunc)(Player* player);
 typedef void(commandFunc)(Player* player, std::vector<std::string> args);
