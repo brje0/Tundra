@@ -50,6 +50,9 @@ extern const char STATE_RESTARTING;
 extern const bool HOOK_OVERRIDE;
 extern const bool HOOK_CONTINUE;
 
+extern const char PRIO_FIRST;
+extern const char PRIO_LAST;
+
 extern const Vector X_AXIS;
 extern const Vector Y_AXIS;
 extern const Vector Z_AXIS;
