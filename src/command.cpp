@@ -49,9 +49,7 @@ static Hook PlayerMessageHook(
                 }
                 else
                 {
-                    // Removes the "/command" from the args vector. Don't remove the "+ 0", because 
-                    // that makes this work somehow. Maybe it converts the argument from iterator to int?
-                    args.erase(args.begin() + 0);
+                    args.erase(args.begin());
                     commandFunctions[i](player, args);
                     return HOOK_OVERRIDE;
                 }
