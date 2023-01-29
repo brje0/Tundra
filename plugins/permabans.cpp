@@ -70,7 +70,7 @@ static Hook LogicHook(
                     awaitConnectedIndices.erase(awaitConnectedIndices.begin() + i);
                     std::string IP = con->getAddress();
 
-                    for (std::string bannedIP : PERMABANNED_IPS)
+                    for (const std::string& bannedIP : PERMABANNED_IPS)
                         if (!IP.compare(bannedIP))
                         {
                             Account* acc = ply->getAccount();
