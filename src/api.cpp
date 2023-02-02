@@ -259,16 +259,41 @@ void Human::arm(int weaponType, int magCount)
     Engine::scenarioArmHuman(getIndex(), weaponType, magCount);
 }
 
-void Human::setVelocity(Vector vel)
+void Human::setVelocity(const Vector& vel)
 {
     for (int i = 0; i < 16; i++)
         Engine::bodies[bones[i].bodyID].vel = vel;
 }
 
-void Human::addVelocity(Vector vel)
+void Human::addVelocity(const Vector& vel)
 {
     for (int i = 0; i < 16; i++)
         Engine::bodies[bones[i].bodyID].vel += vel;
+}
+
+void Human::teleport(const Vector& in_pos)
+{
+    Bone* bone;
+    RigidBody* body;
+    for (int i = 0; i < 16; i++)
+    {
+        bone = &bones[i];
+        bone->pos = in_pos;
+        bone->pos2 = in_pos;
+
+        body = &Engine::bodies[bone->bodyID];
+        body->pos = in_pos;
+    }
+
+    for (int i = 0; i < 3; i++)
+    {
+        Item* item = inventorySlots[i].getPrimaryItem();
+        if (item != nullptr)
+        {
+            item->pos = in_pos;
+            item->getRigidBody()->pos = in_pos;
+        }
+    }
 }
 
 Player* Human::getPlayer()
