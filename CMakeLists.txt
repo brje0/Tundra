@@ -25,11 +25,13 @@ add_library(tundra SHARED
     plugins/no_stamina.cpp
     plugins/car_crash.cpp
     plugins/spawning.cpp
+    plugins/teleportation.cpp
     plugins/fall_guys.cpp
     plugins/logs.cpp
     plugins/short_chat.cpp
     plugins/warnings.cpp
     plugins/permabans.cpp
+    plugins/spawn_timer.cpp
 
     lib/subhook/subhook.c
     lib/subhook/subhook_unix.c
