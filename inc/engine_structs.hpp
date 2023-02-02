@@ -507,8 +507,9 @@ struct Human {
   void remove();
 
   void arm(int weaponType, int magCount);
-  void setVelocity(Vector vel);
-  void addVelocity(Vector vel);
+  void setVelocity(const Vector& vel);
+  void addVelocity(const Vector& vel);
+  void teleport(const Vector& vel);
   Player* getPlayer();
   void setPlayer(Player* player);
   RigidBody* getRigidBody(int index);
