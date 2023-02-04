@@ -43,16 +43,13 @@ static Hook PlayerMessageHook(
             if (!args[0].compare(commands[i]))
             {
                 if (!canCallFunctions[i](player))
-                {
                     player->sendMessage(ACCESS_DENIED_MESSAGE);
-                    return HOOK_OVERRIDE;
-                }
                 else
                 {
                     args.erase(args.begin());
                     commandFunctions[i](player, args);
-                    return HOOK_OVERRIDE;
                 }
+                return HOOK_OVERRIDE;
             }
         }
         return HOOK_CONTINUE;
