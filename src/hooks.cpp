@@ -859,9 +859,12 @@ void h_EventUpdateVehicle(int vehicleID, int updateType, int partID,
     }
 }
 
+// Credit to RosaServer for the inline assembly.
 void h_EventSound(int soundType, Vector* pos, float volume, float pitch)
 {
     subhook::ScopedHookRemove remove(&EventSound.hook);
+    uintptr_t r10;
+	asm("mov %%r10, %0" : "=r"(r10) :);
     bool shouldOverride = false;
     for (auto callback : EventSound.callbacks)
         shouldOverride |= callback(soundType, pos, volume, pitch);
@@ -873,6 +876,7 @@ void h_EventSound(int soundType, Vector* pos, float volume, float pitch)
             postCallback(soundType, pos, volume, pitch);
         EventSound.clearOncePostHooks();
     }
+    asm("mov %0, %%r10" : : "r"(r10));
 }
 
 void h_EventBulletHit(int unk, int hitType, Vector* pos, Vector* normal)
