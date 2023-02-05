@@ -4,7 +4,6 @@
 #include "../inc/hook.hpp"
 #include "../inc/hooks.hpp"
 #include "../inc/engine.hpp"
-
 #include "../inc/util.hpp"
 
 const char NOT_SPECIAL = -1;
