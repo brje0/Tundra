@@ -32,7 +32,8 @@ static std::vector<std::string> processInput(const std::string& input)
 
 static Hook PlayerMessageHook(
     &PlayerMessage,
-    [](int &playerID, char* &message){
+    [](int &playerID, char* &message)
+    {
         // Convert char* to std::string
         std::string tmp(message);
         std::vector<std::string> args = processInput(tmp);
