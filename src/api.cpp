@@ -531,12 +531,14 @@ bool Item::removePickUpHook()
     int index = getIndex();
     unsigned short i = 0;
     for (int info : LinkItem.parallelInfoVec)
+    {
         if (index == info || index == info - MAX_NUM_OF_ITEMS)
         {
             LinkItem.removeHook(i);
             return true;
-            i++;
         }
+        i++;
+    }
     return false;
 }
 
