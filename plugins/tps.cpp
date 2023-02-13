@@ -31,7 +31,7 @@ static std::string averageToString(double* array, unsigned short size)
     { sum += array[i]; i++; }
     if (i == 0) return "0.00";
 
-    // Gets the average (sum / --i)
+    // Gets the average (sum / i)
     // Shifts the decimal place left (* pow(10, DIGIT_PRECISION))
     // Rounds to nearest integer (int)(+ 0.5)
     // Casts to float
@@ -84,11 +84,6 @@ static Hook LogicHook(
             if (++minuteIndex >= SECONDS_PER_MINUTE) minuteIndex = 0;
             if (++halfHourIndex >= SECONDS_PER_HALF_HOUR) halfHourIndex = 0;
             if (++hourIndex >= SECONDS_PER_HOUR) hourIndex = 0;
-
-            std::string log = format("TPS last 5s, 1m, 30m, 1h: {} {} {} {}",
-                            averageToString(fiveSecTPS, 5), averageToString(minuteTPS, SECONDS_PER_MINUTE),
-                            averageToString(halfHourTPS, SECONDS_PER_HALF_HOUR), averageToString(hourTPS, SECONDS_PER_HOUR));
-            std::cout << log << '\n';
         }
         return HOOK_CONTINUE;
     }
