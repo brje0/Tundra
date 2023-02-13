@@ -32,8 +32,8 @@ static std::string averageToString(double* array, unsigned short size)
     if (i == 1) return "0.00";
 
     // Gets the average (sum / --i)
-    // Shifts the decimal place left ( * pow(10, DIGIT_PRECISION))
-    // Rounds to nearest integer (int)( + 0.5)
+    // Shifts the decimal place left (* pow(10, DIGIT_PRECISION))
+    // Rounds to nearest integer (int)(+ 0.5)
     // Casts to float
     // Shifts decimal place right (* pow(10, -DIGIT_PRECISION))
     std::string res = std::to_string((float)((int)((sum / --i) * 
