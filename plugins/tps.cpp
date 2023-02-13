@@ -11,7 +11,7 @@
 #define NO_VALUE -1
 
 static double lastCalcTime = 0;
-static char secondTickCount = 0;
+static unsigned short secondTickCount = 0;
 
 static double fiveSecTPS[5];
 static double minuteTPS[SECONDS_PER_MINUTE];
@@ -80,10 +80,10 @@ static Hook LogicHook(
             halfHourTPS[halfHourIndex] = tps;
             hourTPS[hourIndex] = tps;
 
-            if (++fiveSecIndex >= 5) fiveSecIndex = 0;
-            if (++minuteIndex >= SECONDS_PER_MINUTE) minuteIndex = 0;
-            if (++halfHourIndex >= SECONDS_PER_HALF_HOUR) halfHourIndex = 0;
-            if (++hourIndex >= SECONDS_PER_HOUR) hourIndex = 0;
+            fiveSecIndex *= ++fiveSecIndex != 5;
+            minuteIndex *= ++minuteIndex != SECONDS_PER_MINUTE;
+            halfHourIndex *= ++halfHourIndex != SECONDS_PER_HALF_HOUR;
+            hourIndex *= ++halfHourIndex != SECONDS_PER_HOUR;
         }
         return HOOK_CONTINUE;
     }
