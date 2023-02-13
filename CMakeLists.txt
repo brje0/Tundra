@@ -32,6 +32,7 @@ add_library(tundra SHARED
     plugins/warnings.cpp
     plugins/permabans.cpp
     plugins/spawn_timer.cpp
+    plugins/tps.cpp
 
     lib/subhook/subhook.c
     lib/subhook/subhook_unix.c
