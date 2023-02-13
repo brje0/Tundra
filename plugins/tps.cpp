@@ -26,10 +26,10 @@ static unsigned short hourIndex = 0;
 static std::string averageToString(double* array, unsigned short size)
 {
     long double sum = 0;
-    unsigned short i = 0;
+    unsigned short i = -1;
     while (++i < size && array[i] != NO_VALUE)
         sum += array[i];
-    if (i == 1) return "0.00";
+    if (i == 0) return "0.00";
 
     // Gets the average (sum / --i)
     // Shifts the decimal place left (* pow(10, DIGIT_PRECISION))
