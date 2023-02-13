@@ -10,7 +10,7 @@
 #define SECONDS_PER_HOUR SECONDS_PER_MINUTE * 60
 #define NO_VALUE -1
 
-static double lastCalcTime = getEpochTime();
+static double lastCalcTime = 0;
 static char secondTickCount = 0;
 
 static double fiveSecTPS[5];
@@ -26,9 +26,9 @@ static unsigned short hourIndex = 0;
 static std::string averageToString(double* array, unsigned short size)
 {
     long double sum = 0;
-    unsigned short i = -1;
-    while (++i < size && array[i] != NO_VALUE)
-        sum += array[i];
+    unsigned short i = 0;
+    while (i < size && array[i] != NO_VALUE)
+    { sum += array[i]; i++; }
     if (i == 0) return "0.00";
 
     // Gets the average (sum / --i)
@@ -36,7 +36,7 @@ static std::string averageToString(double* array, unsigned short size)
     // Rounds to nearest integer (int)(+ 0.5)
     // Casts to float
     // Shifts decimal place right (* pow(10, -DIGIT_PRECISION))
-    std::string res = std::to_string((float)((int)((sum / --i) * 
+    std::string res = std::to_string((float)((int)((sum / i) * 
                       pow(10, DIGIT_PRECISION) + 0.5)) * pow(10, -DIGIT_PRECISION));
     std::size_t cutPos = res.find('.');
     if (cutPos == std::string::npos) return res;
@@ -57,6 +57,7 @@ static HookOnce LogicInit(
             tickCount = NO_VALUE;
         for (double& tickCount : hourTPS)
             tickCount = NO_VALUE;
+        lastCalcTime = getEpochTime();
         return HOOK_CONTINUE;
     },
     -1
@@ -83,6 +84,11 @@ static Hook LogicHook(
             if (++minuteIndex >= SECONDS_PER_MINUTE) minuteIndex = 0;
             if (++halfHourIndex >= SECONDS_PER_HALF_HOUR) halfHourIndex = 0;
             if (++hourIndex >= SECONDS_PER_HOUR) hourIndex = 0;
+
+            std::string log = format("TPS last 5s, 1m, 30m, 1h: {} {} {} {}",
+                            averageToString(fiveSecTPS, 5), averageToString(minuteTPS, SECONDS_PER_MINUTE),
+                            averageToString(halfHourTPS, SECONDS_PER_HALF_HOUR), averageToString(hourTPS, SECONDS_PER_HOUR));
+            std::cout << log << '\n';
         }
         return HOOK_CONTINUE;
     }
