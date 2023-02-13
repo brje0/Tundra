@@ -63,29 +63,26 @@ static HookOnce LogicInit(
     -1
 );
 
-static Hook LogicHook(
+static PostHook PostLogicHook(
     &Logic,
     []()
     {
-        if (++secondTickCount == TICKS_PER_UPDATE)
-        {
-            secondTickCount = 0;
+        if (++secondTickCount != TICKS_PER_UPDATE) return;
+        secondTickCount = 0;
 
-            double curTime = getEpochTime();
-            double tps = TICKS_PER_UPDATE / (curTime - lastCalcTime);
-            lastCalcTime = curTime;
+        double curTime = getEpochTime();
+        double tps = TICKS_PER_UPDATE / (curTime - lastCalcTime);
+        lastCalcTime = curTime;
 
-            fiveSecTPS[fiveSecIndex] = tps;
-            minuteTPS[minuteIndex] = tps;
-            halfHourTPS[halfHourIndex] = tps;
-            hourTPS[hourIndex] = tps;
+        fiveSecTPS[fiveSecIndex] = tps;
+        minuteTPS[minuteIndex] = tps;
+        halfHourTPS[halfHourIndex] = tps;
+        hourTPS[hourIndex] = tps;
 
-            fiveSecIndex *= ++fiveSecIndex != 5;
-            minuteIndex *= ++minuteIndex != SECONDS_PER_MINUTE;
-            halfHourIndex *= ++halfHourIndex != SECONDS_PER_HALF_HOUR;
-            hourIndex *= ++halfHourIndex != SECONDS_PER_HOUR;
-        }
-        return HOOK_CONTINUE;
+        fiveSecIndex *= ++fiveSecIndex != 5;
+        minuteIndex *= ++minuteIndex != SECONDS_PER_MINUTE;
+        halfHourIndex *= ++halfHourIndex != SECONDS_PER_HALF_HOUR;
+        hourIndex *= ++halfHourIndex != SECONDS_PER_HOUR;
     }
 );
 
