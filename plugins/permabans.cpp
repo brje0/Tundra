@@ -23,7 +23,10 @@ static PostHook PostAccountTicketHook(
         int phoneNumber = Engine::accounts[accountID].phoneNumber;
         for (int bannedNumber : PERMABANNED)
             if (phoneNumber == bannedNumber)
+            {
                 Engine::accounts[accountID].banTime = PERMABAN_TIME;
+                return;
+            }
     },
     PRIO_FIRST
 );
