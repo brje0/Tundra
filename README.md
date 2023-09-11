@@ -11,7 +11,7 @@ Tundra is a C++ Sub Rosa server modding API for Linux. Thanks to RosaServer (htt
 
 # Configuration
 Edit `persistence/logSettings.json` if you would like to add a Discord webhook for logs.
-Example: if your link is `discord.com/api/webhooks/abc/defgh`, modify `persistence/logSettings.json` from `{"webhookPath":null}` to `{"webhookPath":"abc/defg"}`.
+Example: if your link is `discord.com/api/webhooks/abc/defgh`, modify `persistence/logSettings.json` from `{"webhookPath":null}` to `{"webhookPath":"abc/defgh"}`.
 
 # Using Tundra
 To start creating plugins with Tundra, see the example plugins included in the plugins directory.
